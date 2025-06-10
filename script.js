@@ -6,12 +6,32 @@ function Book(id, title, author, pages, read) {
     this.author = author;
     this.pages = pages;
     this.read = read;
-    this.info = function() {
-        return `${this.title} by ${this.author}, ${this.pages} pages, ${this.read ? 'read' : 'not read yet'}`;
-    }
 }
 
 function addBookToLibrary(title, author, pages, read) {
     const book = new Book(crypto.randomUUID(), title, author, pages, read);
     myLibrary.push(book);
+}
+
+function createBookCard(book) {
+    const card = document.createElement("li");
+    card.classList.add("book");
+
+    for (let prop in book) {
+        if (prop != "id") {
+            const para = document.createElement("p");
+            para.textContent = `${prop}: ${book[prop]}`;
+            card.appendChild(para);
+        }
+    }
+    
+    return card;
+}
+
+function displayLibrary() {
+    const ul = document.querySelector(".library");
+    for (let book of myLibrary) {
+       const card = createBookCard(book);
+       ul.appendChild(card);
+    }
 }

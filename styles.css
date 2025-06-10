@@ -1,0 +1,42 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    font-size: calc(0.8rem + 1.5vw);
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+h1 {
+    align-self: center;
+}
+
+.library {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+    gap: 1rem;
+}
+
+.book {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    list-style: none;
+    padding: 1rem;
+    background: green;
+    aspect-ratio: 16 / 9;
+    border-radius: 1rem;
+}
+
+.book p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
