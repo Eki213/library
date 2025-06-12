@@ -9,6 +9,7 @@
 }
 
 body {
+    font-family: "Josefin Sans", sans-serif;
     display: flex;
     flex-direction: column;
     padding: 1rem;
@@ -40,3 +41,56 @@ h1 {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+dialog {
+    margin: revert;
+    border-radius: 0.5rem;
+    border: none;
+}
+
+input, label, button {
+    display: block;
+    font-family: inherit;
+    font-size: 100%;
+    padding: 5px;
+    width: 100%;
+}
+
+input[type="checkbox"],
+label:has(+ input[type="checkbox"])
+{
+    display: inline-block;
+    width: auto;
+}
+
+button {
+    padding: 0.5rem 0.9rem;
+    border-radius: 0.8rem;
+    border: none;
+    background: green;
+}
+
+button.add-book {
+    margin: 1rem auto;
+    width: 20%;
+}
+
+form {
+    position: relative;
+    padding: 1rem;
+}
+
+.close {
+    position: absolute;
+    top: 0.3rem;
+    right: 0.3rem;
+    fill: black;
+    width: 0.6rem;
+    height: 0.6rem;
+    cursor: pointer;
+}
+
+.close:hover {
+    fill: red;
+}
+

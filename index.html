@@ -5,11 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library</title>
     <link rel="stylesheet" href="./styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Pacifico&family=Roboto:ital,wdth,wght@1,75..100,300&display=swap" rel="stylesheet">
+    
 </head>
 <body>
     <h1>My Library</h1>
+    <p>
+      <button type="button" class="add-book">+ New Book</button>
+    </p>
     <ul class="library">
     </ul>
+
+<dialog>
+  <form>
+      <svg class="close" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+      <p>
+        <label for="title">Title</label>
+        <input type="text" name="title" id="title" required>
+      </p>
+      <p>
+        <label for="author">Author</label>
+        <input type="text" name="author" id="author" required>
+      </p>
+      <p>
+        <label for="pages">Pages</label>
+        <input type="number" name="pages" id="pages" required min="1" max="120000">
+      </p>
+      <p>
+        <label for="read">Read</label>
+        <input type="checkbox" name="read" id="read" value="read">
+      </p>
+      <p>
+        <button class="confirm-button">Confirm</button>
+      </p>
+  </form>
+</dialog>
+
     <script src="./script.js"></script>
 </body>
 </html>
