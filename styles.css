@@ -31,7 +31,7 @@ h1 {
     justify-content: space-around;
     list-style: none;
     padding: 1rem;
-    background: green;
+    background: gray;
     aspect-ratio: 16 / 9;
     border-radius: 1rem;
 }

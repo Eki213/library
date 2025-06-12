@@ -31,15 +31,26 @@ function getBookData() {
 function createBookCard(book) {
     const card = document.createElement("li");
     card.classList.add("book");
+    const deleteButton = document.createElement("button");
+    deleteButton.setAttribute("type", "button");
+    deleteButton.textContent = "Delete";
+    deleteButton.classList.add("delete-book");
+    const buttons = document.createElement("div");
+    buttons.classList.add("buttons");
+    buttons.appendChild(deleteButton);
+    
 
     for (let prop in book) {
         if (prop != "id") {
             const para = document.createElement("p");
             para.textContent = `${prop}: ${book[prop]}`;
             card.appendChild(para);
+        } else {
+            card.dataset.id = book[prop];
         }
     }
-    
+
+    card.append(buttons);
     ul.appendChild(card);
 }
 
@@ -69,4 +80,14 @@ confirmButton.addEventListener("click", (event) => {
     form.reset();
     
     dialog.close();
+});
+
+ul.addEventListener("click", (event) => {
+    if (event.target.classList.contains("delete-book")) {
+        const card = event.target.closest(".book");
+        const cardBookId = card.dataset.id;
+        const bookIndex = myLibrary.findIndex(book => book.id === cardBookId);
+        myLibrary.splice(bookIndex, 1);
+        displayLibrary();
+    }
 });
