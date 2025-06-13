@@ -67,7 +67,6 @@ button {
     padding: 0.5rem 0.9rem;
     border-radius: 0.8rem;
     border: none;
-    background: green;
 }
 
 button.add-book {
@@ -94,3 +93,10 @@ form {
     fill: red;
 }
 
+.not-read {
+    background: red;
+}
+
+.read {
+    background: green;
+}

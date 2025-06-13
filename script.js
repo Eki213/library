@@ -31,17 +31,15 @@ function getBookData() {
 function createBookCard(book) {
     const card = document.createElement("li");
     card.classList.add("book");
-    const deleteButton = document.createElement("button");
-    deleteButton.setAttribute("type", "button");
-    deleteButton.textContent = "Delete";
-    deleteButton.classList.add("delete-book");
-    const buttons = document.createElement("div");
-    buttons.classList.add("buttons");
-    buttons.appendChild(deleteButton);
+    const deleteButton = createDeleteButton();
+    const readButton = createReadButton(book.read);
+    const buttons = createButtonsContainer(readButton, deleteButton);
     
 
     for (let prop in book) {
-        if (prop != "id") {
+        if (!book.hasOwnProperty(prop) || prop === "read") continue;
+
+        if (prop !== "id") {
             const para = document.createElement("p");
             para.textContent = `${prop}: ${book[prop]}`;
             card.appendChild(para);
@@ -52,6 +50,40 @@ function createBookCard(book) {
 
     card.append(buttons);
     ul.appendChild(card);
+}
+
+function createDeleteButton() {
+    const deleteButton = document.createElement("button");   
+    deleteButton.setAttribute("type", "button");
+    deleteButton.textContent = "Delete";
+    deleteButton.className = "delete-book";
+
+    return deleteButton;
+}
+
+function createReadButton(state) {
+    const readButton = document.createElement("button");   
+    readButton.setAttribute("type", "button");
+    readButton.className = "read-button";
+
+    updateReadButton(readButton, state);
+
+    return readButton;
+}
+
+function updateReadButton(button, state)  {
+    button.classList.toggle("read", state);
+    button.classList.toggle("not-read", !state);
+    button.textContent = state ? "Read" : "Not Read";
+}
+
+function createButtonsContainer(readButton, deleteButton) {
+    const buttons = document.createElement("div");
+    buttons.classList.add("buttons");
+    buttons.appendChild(readButton);
+    buttons.appendChild(deleteButton);
+
+    return buttons;
 }
 
 function displayLibrary() {
@@ -77,17 +109,31 @@ confirmButton.addEventListener("click", (event) => {
     const bookData = getBookData();
     addBookToLibrary(bookData.title, bookData.author, bookData.pages, bookData.read);
     displayLibrary();
+
     form.reset();
-    
     dialog.close();
 });
 
 ul.addEventListener("click", (event) => {
-    if (event.target.classList.contains("delete-book")) {
-        const card = event.target.closest(".book");
-        const cardBookId = card.dataset.id;
+    if (event.target.tagName !== "BUTTON") return;
+
+    const button = event.target;
+    const card = button.closest(".book");
+    const cardBookId = card.dataset.id;
+
+    if (button.classList.contains("delete-book")) {
         const bookIndex = myLibrary.findIndex(book => book.id === cardBookId);
         myLibrary.splice(bookIndex, 1);
         displayLibrary();
     }
+
+    if (button.classList.contains("read-button")) {
+        const book = myLibrary.find(book => book.id === cardBookId);
+        book.toggleRead();
+        updateReadButton(button, book.read);
+    }
 });
+
+Book.prototype.toggleRead = function() {
+    this.read = !this.read;
+};
