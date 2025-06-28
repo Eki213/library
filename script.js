@@ -6,12 +6,17 @@ const confirmButton = document.querySelector(".confirm-button");
 const form = document.querySelector("dialog form");
 const ul = document.querySelector(".library");
 
-function Book(id, title, author, pages, read) {
-    this.id = id;
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
+class Book {
+    constructor(id, title, author, pages, read) { 
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+    }
+    toggleRead() {
+        this.read = !this.read;
+    }
 }
 
 function addBookToLibrary(title, author, pages, read) {
@@ -31,21 +36,19 @@ function getBookData() {
 function createBookCard(book) {
     const card = document.createElement("li");
     card.classList.add("book");
+    card.dataset.id = book.id;
+
     const deleteButton = createDeleteButton();
     const readButton = createReadButton(book.read);
     const buttons = createButtonsContainer(readButton, deleteButton);
     
 
     for (let prop in book) {
-        if (!book.hasOwnProperty(prop) || prop === "read") continue;
+        if (prop === "read" || prop === "id") continue;
 
-        if (prop !== "id") {
-            const para = document.createElement("p");
-            para.textContent = `${prop}: ${book[prop]}`;
-            card.appendChild(para);
-        } else {
-            card.dataset.id = book[prop];
-        }
+        const para = document.createElement("p");
+        para.textContent = `${prop}: ${book[prop]}`;
+        card.appendChild(para);
     }
 
     card.append(buttons);
@@ -133,7 +136,3 @@ ul.addEventListener("click", (event) => {
         updateReadButton(button, book.read);
     }
 });
-
-Book.prototype.toggleRead = function() {
-    this.read = !this.read;
-};
