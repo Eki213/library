@@ -1,4 +1,3 @@
-const myLibrary = [];
 const dialog = document.querySelector("dialog");
 const addButton = document.querySelector(".add-book");
 const closeButton = document.querySelector(".close");
@@ -19,9 +18,31 @@ class Book {
     }
 }
 
+class Library {
+    #books = [];
+
+    addBook(book) {
+        this.#books.push(book);
+    }
+
+    deleteBook(id) {
+        this.#books = this.#books.filter(book => book.id !== id);
+    }
+
+    findBook(id) {
+        return this.#books.find(book => book.id === id);
+    }
+
+    *[Symbol.iterator]() {
+        yield* this.#books;
+    }
+}
+
+const myLibrary = new Library();
+
 function addBookToLibrary(title, author, pages, read) {
     const book = new Book(crypto.randomUUID(), title, author, pages, read);
-    myLibrary.push(book);
+    myLibrary.addBook(book);
 }
 
 function getBookData() {
@@ -122,16 +143,15 @@ ul.addEventListener("click", (event) => {
 
     const button = event.target;
     const card = button.closest(".book");
-    const cardBookId = card.dataset.id;
+    const bookId = card.dataset.id;
 
     if (button.classList.contains("delete-book")) {
-        const bookIndex = myLibrary.findIndex(book => book.id === cardBookId);
-        myLibrary.splice(bookIndex, 1);
+        myLibrary.deleteBook(bookId);
         displayLibrary();
     }
 
     if (button.classList.contains("read-button")) {
-        const book = myLibrary.find(book => book.id === cardBookId);
+        const book = myLibrary.findBook(bookId);
         book.toggleRead();
         updateReadButton(button, book.read);
     }
